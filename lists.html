@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Listas - M3U Manager</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-theme fixed-top">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="navbarOffcanvasLg" aria-label="Toggle navigation" data-bs-theme="dark"><span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="dashboard.html">
+                <i class="bi bi-collection-play me-2"></i>
+                .m3uManager
+            </a>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+              <div class="navbar-nav nav-underline">
+                <a class="nav-link text-white me-2" href="dashboard.html">
+                    <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                </a>
+                <a class="nav-link text-white active me-2" href="lists.html">
+                    <i class="bi bi-list-ul me-2"></i>Mis Listas
+                </a>
+                <a class="nav-link text-white me-2" href="scan.html">
+                    <i class="bi bi-upload me-2"></i>Importar M3U
+                </a>
+                <a class="nav-link text-white me-2" href="settings.html">
+                    <i class="bi bi-gear me-2"></i>Configuración
+                </a>
+              </div>
+            </div>
+            <!-- Menú usuario -->
+            <div class="text-white ms-auto align-items-center">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" 
+                       data-bs-toggle="dropdown">
+                        <div class="me-2">
+                            <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" 
+                                 style="width: 32px; height: 32px;">
+                                <i class="bi bi-person text-success-emphasis"></i>
+                            </div>
+                        </div>
+                        <span id="userName" class="d-none d-md-block">Usuario</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="settings.html">
+                            <i class="bi bi-gear me-2"></i>Configuración
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn">
+                            <i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="offcanvas offcanvas-start navbar-theme text-white" tabindex="-1" id="sidebar" 
+         style="width: 280px;">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Menú</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <nav class="nav flex-column">
+                <a class="nav-link active text-white py-3 border-bottom border-secondary" href="dashboard.html">
+                    <i class="bi bi-speedometer2 me-3"></i>Dashboard
+                </a>
+                <a class="nav-link text-white py-3 border-bottom border-secondary" href="lists.html">
+                    <i class="bi bi-list-ul me-3"></i>Mis Listas
+                </a>
+                <a class="nav-link text-white py-3 border-bottom border-secondary" href="scan.html">
+                    <i class="bi bi-upload me-3"></i>Importar M3U
+                </a>
+                <a class="nav-link text-white py-3 border-bottom border-secondary" href="settings.html">
+                    <i class="bi bi-gear me-3"></i>Configuración
+                </a>
+            </nav>
+            
+            <!-- Información del plan -->
+            <div class="p-3 border-top border-secondary mt-auto">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <small class="text-light">Plan Actual</small>
+                    <span class="badge bg-warning text-dark">Gratuito</span>
+                </div>
+                <div class="progress" style="height: 5px;">
+                    <div class="progress-bar bg-success" style="width: 33%"></div>
+                </div>
+                <small class="text-white-50">1 de 3 listas utilizadas</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <main class="container py-4">
+        <div class="row">
+            <div class="col-12">
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb" class="mb-2">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <i class="bi bi-list-ul me-1"></i>Mis Listas
+                        </li>
+                    </ol>
+                </nav>
+
+                <!-- Encabezado -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1 class="h3 text-theme mb-0">Mis Listas</h1>
+                        <p class="text-muted mb-0" id="listCount">Administra tus listas de canales</p>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createListModal">
+                            <i class="bi bi-plus-circle me-1"></i>Nueva Lista
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Alertas -->
+                <div id="alertContainer"></div>
+
+                <!-- Filtros y búsqueda -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-search"></i>
+                                    </span>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           id="searchLists" 
+                                           placeholder="Buscar listas...">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select" id="filterStatus">
+                                    <option value="">Todos los estados</option>
+                                    <option value="active">Con canales activos</option>
+                                    <option value="inactive">Con canales inactivos</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select class="form-select" id="sortLists">
+                                    <option value="newest">Más recientes primero</option>
+                                    <option value="oldest">Más antiguas primero</option>
+                                    <option value="name_asc">Nombre (A-Z)</option>
+                                    <option value="name_desc">Nombre (Z-A)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Listas -->
+                <div class="row" id="listsContainer">
+                    <!-- Se llena dinámicamente -->
+                </div>
+
+                <!-- Mensaje sin listas -->
+                <div class="text-center py-5 d-none" id="noListsMessage">
+                    <i class="bi bi-list-ul text-muted" style="font-size: 4rem;"></i>
+                    <h3 class="mt-3">No hay listas creadas</h3>
+                    <p class="text-muted mb-4">Comienza creando tu primera lista de canales</p>
+                    <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#createListModal">
+                        <i class="bi bi-plus-circle me-2"></i>Crear Primera Lista
+                    </button>
+                </div>
+
+                <!-- Modal para crear lista -->
+                <div class="modal fade" id="createListModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary text-white">
+                                <h5 class="modal-title">
+                                    <i class="bi bi-plus-circle me-2"></i>Nueva Lista
+                                </h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <form id="createListForm" novalidate>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="listName" class="form-label">Nombre de la Lista</label>
+                                        <input type="text" 
+                                               class="form-control" 
+                                               id="listName" 
+                                               required
+                                               pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s\-_.]{3,50}$"
+                                               placeholder="Mi Lista de Canales">
+                                        <div class="invalid-feedback">
+                                            El nombre debe tener entre 3 y 50 caracteres.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="listDescription" class="form-label">Descripción (Opcional)</label>
+                                        <textarea class="form-control" 
+                                                  id="listDescription" 
+                                                  rows="3"
+                                                  placeholder="Descripción de la lista..."></textarea>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="listIsPublic">
+                                        <label class="form-check-label" for="listIsPublic">
+                                            Hacer lista pública (generar enlace compartible)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <span id="createListBtnText">Crear Lista</span>
+                                        <span id="createListSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal para editar lista -->
+                <div class="modal fade" id="editListModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary text-white">
+                                <h5 class="modal-title">
+                                    <i class="bi bi-pencil me-2"></i>Editar Lista
+                                </h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <form id="editListForm" novalidate>
+                                <input type="hidden" id="editListId">
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="editListName" class="form-label">Nombre de la Lista</label>
+                                        <input type="text" 
+                                               class="form-control" 
+                                               id="editListName" 
+                                               required
+                                               pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s\-_.]{3,50}$">
+                                        <div class="invalid-feedback">
+                                            El nombre debe tener entre 3 y 50 caracteres.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="editListDescription" class="form-label">Descripción (Opcional)</label>
+                                        <textarea class="form-control" 
+                                                  id="editListDescription" 
+                                                  rows="3"></textarea>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="editListIsPublic">
+                                        <label class="form-check-label" for="editListIsPublic">
+                                            Hacer lista pública (generar enlace compartible)
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        Cancelar
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <span id="editListBtnText">Guardar Cambios</span>
+                                        <span id="editListSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal para eliminar lista -->
+                <div class="modal fade" id="deleteListModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-danger text-white">
+                                <h5 class="modal-title">
+                                    <i class="bi bi-exclamation-triangle me-2"></i>Eliminar Lista
+                                </h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>¿Estás seguro de que deseas eliminar la lista <strong id="deleteListName"></strong>?</p>
+                                <div class="alert alert-warning">
+                                    <i class="bi bi-exclamation-circle me-2"></i>
+                                    Esta acción eliminará todos los canales asociados y no se puede deshacer.
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Cancelar
+                                </button>
+                                <button type="button" class="btn btn-danger" id="confirmDeleteList">
+                                    <span>Eliminar Lista</span>
+                                    <span id="deleteListSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="navbar-theme text-white py-3 mt-4">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <small>&copy; 2024 M3U Manager. Todos los derechos reservados.</small>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <small>
+                        <a href="disclaimer.html" class="text-white text-decoration-none me-3">Descargo</a>
+                        <a href="privacy-policy.html" class="text-white text-decoration-none">Privacidad</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <!-- Auth JS -->
+    <script src="js/auth.js"></script>
+    <!-- Lists JS -->
+    <script src="js/lists.js"></script>
+</body>
+</html>

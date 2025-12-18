@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración - M3U Manager</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-theme fixed-top">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="navbarOffcanvasLg" aria-label="Toggle navigation" data-bs-theme="dark"><span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="dashboard.html">
+                <i class="bi bi-collection-play me-2"></i>
+                .m3uManager
+            </a>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+              <div class="navbar-nav nav-underline">
+                <a class="nav-link text-white me-2" href="dashboard.html">
+                    <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                </a>
+                <a class="nav-link text-white me-2" href="lists.html">
+                    <i class="bi bi-list-ul me-2"></i>Mis Listas
+                </a>
+                <a class="nav-link text-white me-2" href="scan.html">
+                    <i class="bi bi-upload me-2"></i>Importar M3U
+                </a>
+                <a class="nav-link active text-white me-2" href="settings.html">
+                    <i class="bi bi-gear me-2"></i>Configuración
+                </a>
+              </div>
+            </div>
+            <!-- Menú usuario -->
+            <div class="text-white ms-auto align-items-center">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" 
+                       data-bs-toggle="dropdown">
+                        <div class="me-2">
+                            <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" 
+                                 style="width: 32px; height: 32px;">
+                                <i class="bi bi-person text-success-emphasis"></i>
+                            </div>
+                        </div>
+                        <span id="userName" class="d-none d-md-block">Usuario</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="settings.html">
+                            <i class="bi bi-gear me-2"></i>Configuración
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logoutBtn">
+                            <i class="bi bi-box-arrow-right me-2"></i>Cerrar Sesión
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="offcanvas offcanvas-start navbar-theme text-white" tabindex="-1" id="sidebar" 
+         style="width: 280px;">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">Menú</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <nav class="nav flex-column">
+                <a class="nav-link active text-white py-3 border-bottom border-secondary" href="dashboard.html">
+                    <i class="bi bi-speedometer2 me-3"></i>Dashboard
+                </a>
+                <a class="nav-link text-white py-3 border-bottom border-secondary" href="lists.html">
+                    <i class="bi bi-list-ul me-3"></i>Mis Listas
+                </a>
+                <a class="nav-link text-white py-3 border-bottom border-secondary" href="scan.html">
+                    <i class="bi bi-upload me-3"></i>Importar M3U
+                </a>
+                <a class="nav-link active text-white py-3 border-bottom border-secondary" href="settings.html">
+                    <i class="bi bi-gear me-3"></i>Configuración
+                </a>
+            </nav>
+            
+            <!-- Información del plan -->
+            <div class="p-3 border-top border-secondary mt-auto">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <small class="text-light">Plan Actual</small>
+                    <span class="badge bg-warning text-dark">Gratuito</span>
+                </div>
+                <div class="progress" style="height: 5px;">
+                    <div class="progress-bar bg-success" style="width: 33%"></div>
+                </div>
+                <small class="text-white-50">1 de 3 listas utilizadas</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <main class="container py-4">
+        <div class="row">
+            <div class="col-12">
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb" class="mb-2">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <i class="bi bi-gear me-1"></i>Configuración
+                        </li>
+                    </ol>
+                </nav>
+
+                <!-- Encabezado -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h1 class="h3 text-primary text-start mb-0">Configuración</h1>
+                        <p class="text-muted mb-0">Administra tu cuenta y preferencias</p>
+                    </div>
+                </div>
+
+                <!-- Alertas -->
+                <div id="alertContainer"></div>
+
+                <!-- Tabs de configuración -->
+                <div class="row">
+                    <div class="col-lg-3 mb-4 d-flex flex-column">
+                        <div class="card mt-3 mt-lg-0 order-1 order-lg-0">
+                            <div class="list-group list-group-flush">
+                                <a class="list-group-item list-group-item-action active" 
+                                   data-bs-toggle="tab" 
+                                   href="#profile-tab">
+                                    <i class="bi bi-person me-2"></i>Perfil
+                                </a>
+                                <a class="list-group-item list-group-item-action" 
+                                   data-bs-toggle="tab" 
+                                   href="#password-tab">
+                                    <i class="bi bi-lock me-2"></i>Contraseña
+                                </a>
+                                <a class="list-group-item list-group-item-action" 
+                                   data-bs-toggle="tab" 
+                                   href="#notifications-tab">
+                                    <i class="bi bi-bell me-2"></i>Notificaciones
+                                </a>
+                                <a class="list-group-item list-group-item-action" 
+                                   data-bs-toggle="tab" 
+                                   href="#categories-tab">
+                                    <i class="bi bi-tags me-2"></i>Categorías
+                                </a>
+                                <a class="list-group-item list-group-item-action" 
+                                   data-bs-toggle="tab" 
+                                   href="#subscription-tab">
+                                    <i class="bi bi-gem me-2"></i>Suscripción
+                                </a>
+                                <a class="list-group-item list-group-item-action" 
+                                   data-bs-toggle="tab" 
+                                   href="#danger-tab">
+                                    <i class="bi bi-exclamation-triangle me-2"></i>Zona de Peligro
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Información de la cuenta -->
+                        <div class="card mt-lg-3 order-0 order-lg-1">
+                            <div class="card-body text-center">
+                                <div class="mb-3">
+                                    <div class="mx-auto rounded-circle bg-primary d-flex align-items-center justify-content-center" 
+                                         style="width: 80px; height: 80px;">
+                                        <i class="bi bi-person text-white" style="font-size: 2rem;"></i>
+                                    </div>
+                                </div>
+                                <h5 id="userFullName">Nombre Usuario</h5>
+                                <p class="text-muted mb-2" id="userEmail">email@ejemplo.com</p>
+                                <small class="text-muted">Miembro desde: <span id="memberSince"></span></small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9">
+                        <div class="tab-content">
+                            <!-- Tab: Perfil -->
+                            <div class="tab-pane fade show active" id="profile-tab">
+                                <div class="card">
+                                    <div class="card-header bg-light py-3 border-0 border-top border-primary border-2 text-primary">
+                                        <h5 class="fs-6 mb-0">
+                                            <i class="bi bi-person me-2"></i>Información del Perfil
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="profileForm" novalidate>
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="profileName" class="form-label">Nombre Completo</label>
+                                                    <input type="text" 
+                                                           class="form-control" 
+                                                           id="profileName" 
+                                                           required
+                                                           pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$">
+                                                    <div class="invalid-feedback">
+                                                        Por favor ingresa un nombre válido.
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="profileEmail" class="form-label">Correo Electrónico</label>
+                                                    <input type="email" 
+                                                           class="form-control" 
+                                                           id="profileEmail" 
+                                                           required
+                                                           readonly>
+                                                    <small class="text-muted">
+                                                        Para cambiar el correo electrónico, contacta al soporte.
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="profileTimezone" class="form-label">Zona Horaria</label>
+                                                <select class="form-select" id="profileTimezone">
+                                                    <option value="America/Mexico_City">Ciudad de México (UTC-6)</option>
+                                                    <option value="America/New_York">Nueva York (UTC-5)</option>
+                                                    <option value="America/Los_Angeles">Los Ángeles (UTC-8)</option>
+                                                    <option value="Europe/Madrid">Madrid (UTC+1)</option>
+                                                    <option value="UTC">UTC</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="profileLanguage" class="form-label">Idioma</label>
+                                                <select class="form-select" id="profileLanguage">
+                                                    <option value="es">Español</option>
+                                                    <option value="en">English</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <span id="profileBtnText">Guardar Cambios</span>
+                                                    <span id="profileSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab: Contraseña -->
+                            <div class="tab-pane fade" id="password-tab">
+                                <div class="card">
+                                    <div class="card-header py-3 border-0 border-top border-primary border-2 text-primary">
+                                        <h5 class="fs-6 mb-0">
+                                            <i class="bi bi-lock me-2"></i>Cambiar Contraseña
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="passwordForm" novalidate>
+                                            <div class="mb-3">
+                                                <label for="currentPassword" class="form-label">Contraseña Actual</label>
+                                                <input type="password" 
+                                                       class="form-control" 
+                                                       id="currentPassword" 
+                                                       required
+                                                       minlength="6">
+                                                <div class="invalid-feedback">
+                                                    Por favor ingresa tu contraseña actual.
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label for="newPassword" class="form-label">Nueva Contraseña</label>
+                                                <input type="password" 
+                                                       class="form-control" 
+                                                       id="newPassword" 
+                                                       required
+                                                       minlength="6">
+                                                <div class="invalid-feedback">
+                                                    La nueva contraseña debe tener al menos 6 caracteres.
+                                                </div>
+                                                <div class="password-strength mt-2">
+                                                    <div class="progress" style="height: 5px;">
+                                                        <div class="progress-bar" id="passwordStrength" style="width: 0%"></div>
+                                                    </div>
+                                                    <small class="text-muted" id="passwordStrengthText">Seguridad de la contraseña</small>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-4">
+                                                <label for="confirmPassword" class="form-label">Confirmar Nueva Contraseña</label>
+                                                <input type="password" 
+                                                       class="form-control" 
+                                                       id="confirmPassword" 
+                                                       required
+                                                       minlength="6">
+                                                <div class="invalid-feedback">
+                                                    Las contraseñas no coinciden.
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="alert alert-info">
+                                                <i class="bi bi-info-circle me-2"></i>
+                                                <small>
+                                                    La contraseña debe tener al menos 6 caracteres. 
+                                                    Recomendamos usar una combinación de letras, números y símbolos.
+                                                </small>
+                                            </div>
+                                            
+                                            <div class="d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <span id="passwordBtnText">Cambiar Contraseña</span>
+                                                    <span id="passwordSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab: Notificaciones -->
+                            <div class="tab-pane fade" id="notifications-tab">
+                                <div class="card">
+                                    <div class="card-header py-3 border-0 border-top border-primary border-2 text-primary">
+                                        <h5 class="fs-6 mb-0">
+                                            <i class="bi bi-bell me-2"></i>Preferencias de Notificaciones
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="notificationsForm">
+                                            <div class="mb-4">
+                                                <h6>Notificaciones por Correo</h6>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" id="notifyChannelStatus">
+                                                    <label class="form-check-label" for="notifyChannelStatus">
+                                                        Notificar cambios de estado en canales
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" id="notifyImportComplete">
+                                                    <label class="form-check-label" for="notifyImportComplete">
+                                                        Notificar cuando se complete una importación
+                                                    </label>
+                                                </div>
+                                                <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" id="notifyUpdates">
+                                                    <label class="form-check-label" for="notifyUpdates">
+                                                        Notificar sobre actualizaciones del sistema
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-4">
+                                                <h6>Frecuencia de Verificación</h6>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="checkFrequency" id="checkHourly" value="hourly">
+                                                    <label class="form-check-label" for="checkHourly">
+                                                        Cada hora
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="checkFrequency" id="checkDaily" value="daily" checked>
+                                                    <label class="form-check-label" for="checkDaily">
+                                                        Una vez al día
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="checkFrequency" id="checkWeekly" value="weekly">
+                                                    <label class="form-check-label" for="checkWeekly">
+                                                        Una vez a la semana
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="checkFrequency" id="checkManual" value="manual">
+                                                    <label class="form-check-label" for="checkManual">
+                                                        Solo manualmente
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <span id="notificationsBtnText">Guardar Preferencias</span>
+                                                    <span id="notificationsSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab: Categorías -->
+                            <div class="tab-pane fade" id="categories-tab">
+                                <div class="card">
+                                    <div class="card-header py-3 border-0 border-top border-primary border-2 text-primary d-flex justify-content-between align-items-center">
+                                        <h5 class="fs-6 mb-0">
+                                            <i class="bi bi-tags me-2"></i>Mis Categorías
+                                        </h5>
+                                        <button class="btn btn-sm btn-light" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+                                            <i class="bi bi-plus-circle me-1"></i>Nueva Categoría
+                                        </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="text-muted mb-4">
+                                            Administra tus categorías personalizadas. Las categorías por defecto no se pueden modificar.
+                                        </p>
+                                        
+                                        <div class="row" id="categoriesContainer">
+                                            <!-- Se llena dinámicamente -->
+                                        </div>
+                                        
+                                        <div class="text-center py-5 d-none" id="noCategoriesMessage">
+                                            <i class="bi bi-tags text-muted" style="font-size: 4rem;"></i>
+                                            <h5 class="mt-3">No hay categorías personalizadas</h5>
+                                            <p class="text-muted">Crea tu primera categoría personalizada</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab: Suscripción -->
+                            <div class="tab-pane fade" id="subscription-tab">
+                                <div class="card">
+                                    <div class="card-header py-3 border-0 border-top border-primary border-2 text-primary">
+                                        <h5 class="fs-6 mb-0">
+                                            <i class="bi bi-gem me-2"></i>Mi Suscripción
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="text-center mb-4">
+                                            <div class="mb-3">
+                                                <span class="badge bg-warning text-dark fs-6 p-2" id="currentPlan">Plan Gratuito</span>
+                                            </div>
+                                            <h4>Límites Actuales</h4>
+                                        </div>
+                                        
+                                        <div class="row mb-4">
+                                            <div class="col-md-6">
+                                                <div class="card border-0 bg-light">
+                                                    <div class="card-body text-center">
+                                                        <h2 id="currentLists">0/3</h2>
+                                                        <p class="text-muted mb-0">Listas</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card border-0 bg-light">
+                                                    <div class="card-body text-center">
+                                                        <h2 id="currentChannels">0/150</h2>
+                                                        <p class="text-muted mb-0">Canales Totales</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="alert alert-info">
+                                            <i class="bi bi-info-circle me-2"></i>
+                                            <strong>Plan Premium disponible próximamente</strong><br>
+                                            El plan premium incluirá listas ilimitadas, más canales por lista, 
+                                            verificación automática y enlaces compartibles permanentes.
+                                        </div>
+                                        
+                                        <div class="text-center mt-4">
+                                            <button class="btn btn-warning" disabled>
+                                                <i class="bi bi-gem me-2"></i>Actualizar a Premium (Próximamente)
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab: Zona de Peligro -->
+                            <div class="tab-pane fade" id="danger-tab">
+                                <div class="card border-danger">
+                                    <div class="card-header bg-danger text-white py-3">
+                                        <h5 class="fs-6 mb-0">
+                                            <i class="bi bi-exclamation-triangle me-2"></i>Zona de Peligro
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="alert alert-danger">
+                                            <i class="bi bi-exclamation-octagon-fill me-2"></i>
+                                            <strong>Advertencia:</strong> Las acciones en esta sección son irreversibles.
+                                        </div>
+                                        
+                                        <div class="mb-4">
+                                            <h5>Exportar todos los datos</h5>
+                                            <p class="text-muted mb-3">
+                                                Descarga un archivo con todos tus datos: listas, canales y configuraciones.
+                                            </p>
+                                            <button class="btn btn-outline-danger" id="exportAllData">
+                                                <i class="bi bi-download me-2"></i>Exportar todos los datos
+                                            </button>
+                                        </div>
+                                        
+                                        <hr>
+                                        
+                                        <div class="mb-4">
+                                            <h5>Eliminar todos los datos</h5>
+                                            <p class="text-muted mb-3">
+                                                Esta acción eliminará todas tus listas, canales y configuraciones. 
+                                                Tu cuenta permanecerá activa.
+                                            </p>
+                                            <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteDataModal">
+                                                <i class="bi bi-trash me-2"></i>Eliminar todos los datos
+                                            </button>
+                                        </div>
+                                        
+                                        <hr>
+                                        
+                                        <div class="mb-4">
+                                            <h5>Eliminar cuenta permanentemente</h5>
+                                            <p class="text-muted mb-3">
+                                                Esta acción eliminará tu cuenta y todos tus datos de forma permanente. 
+                                                Esta acción no se puede deshacer.
+                                            </p>
+                                            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+                                                <i class="bi bi-person-x me-2"></i>Eliminar mi cuenta
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para agregar categoría -->
+        <div class="modal fade" id="addCategoryModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title">
+                            <i class="bi bi-plus-circle me-2"></i>Nueva Categoría
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form id="addCategoryForm" novalidate>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="categoryName" class="form-label">Nombre de la Categoría</label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="categoryName" 
+                                       required
+                                       pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s\-]{2,30}$"
+                                       placeholder="Nombre de la categoría">
+                                <div class="invalid-feedback">
+                                    El nombre debe tener entre 2 y 30 caracteres.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="categoryColor" class="form-label">Color de la Categoría</label>
+                                <input type="color" 
+                                       class="form-control form-control-color" 
+                                       id="categoryColor" 
+                                       value="#4361ee">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <span id="categoryBtnText">Crear Categoría</span>
+                                <span id="categorySpinner" class="spinner-border spinner-border-sm d-none"></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para eliminar datos -->
+        <div class="modal fade" id="deleteDataModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">
+                            <i class="bi bi-exclamation-triangle me-2"></i>Eliminar Todos los Datos
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger">
+                            <i class="bi bi-exclamation-octagon-fill me-2"></i>
+                            <strong>¡Advertencia!</strong> Esta acción eliminará:
+                        </div>
+                        <ul>
+                            <li>Todas tus listas</li>
+                            <li>Todos tus canales</li>
+                            <li>Todas tus categorías personalizadas</li>
+                            <li>Todas tus configuraciones</li>
+                        </ul>
+                        <p class="text-muted">Tu cuenta permanecerá activa pero sin datos.</p>
+                        <div class="mb-3">
+                            <label for="confirmDeleteData" class="form-label">
+                                Escribe "ELIMINAR" para confirmar
+                            </label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="confirmDeleteData" 
+                                   placeholder="ELIMINAR">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="button" class="btn btn-danger" id="confirmDeleteDataBtn" disabled>
+                            <span>Eliminar Todos los Datos</span>
+                            <span id="deleteDataSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para eliminar cuenta -->
+        <div class="modal fade" id="deleteAccountModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">
+                            <i class="bi bi-exclamation-triangle me-2"></i>Eliminar Cuenta
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger">
+                            <i class="bi bi-exclamation-octagon-fill me-2"></i>
+                            <strong>¡Esta acción no se puede deshacer!</strong>
+                        </div>
+                        <p>Al eliminar tu cuenta:</p>
+                        <ul>
+                            <li>Todos tus datos serán eliminados permanentemente</li>
+                            <li>No podrás recuperar tu cuenta</li>
+                            <li>Perderás acceso a todas tus listas</li>
+                            <li>Los enlaces compartidos dejarán de funcionar</li>
+                        </ul>
+                        <div class="mb-3">
+                            <label for="confirmDeleteAccount" class="form-label">
+                                Escribe "ELIMINAR CUENTA" para confirmar
+                            </label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="confirmDeleteAccount" 
+                                   placeholder="ELIMINAR CUENTA">
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="understandDelete">
+                            <label class="form-check-label" for="understandDelete">
+                                Entiendo que esta acción es permanente e irreversible
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="button" class="btn btn-danger" id="confirmDeleteAccountBtn" disabled>
+                            <span>Eliminar Mi Cuenta Permanentemente</span>
+                            <span id="deleteAccountSpinner" class="spinner-border spinner-border-sm d-none"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="navbar-theme text-white py-3 mt-4">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 text-center">
+                    <small>&copy; 2024 M3U Manager. Todos los derechos reservados.</small>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <small>
+                        <a href="disclaimer.html" class="text-white text-decoration-none me-3">Descargo</a>
+                        <a href="privacy-policy.html" class="text-white text-decoration-none">Privacidad</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <!-- Auth JS -->
+    <script src="js/auth.js"></script>
+    <!-- Settings JS -->
+    <script src="js/settings.js"></script>
+</body>
+</html>

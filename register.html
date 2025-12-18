@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - M3U Manager</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+</head>
+<body class="bg-light">
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-theme bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="bi bi-collection-play me-2"></i>
+                .m3uManager
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" data-bs-theme="dark">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-light ms-2" href="login.html">Iniciar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+
+
+
+
+
+
+
+
+
+
+<main class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-xl-10">
+      <div class="card border-0">
+        <div class="card-body p-0">
+          <div class="row no-gutters">
+            <div class="col-lg-6 d-none d-lg-inline-block">
+              <div class="account-block">
+                <div class="overlay">
+                <div class="account-testimonial">
+                  <h4 class="text-white mb-4">.m3uManager</h4>
+                  <p class="lead text-white">"Manage your channels iptv and connect wherever you want on your devices."</p>
+                  <p class="pb-5">- Created by <b>SoftLoz</b></p>
+
+                  <!-- Beneficios -->
+                <div class="border-0 shadow-sm mt-5">
+                    <div class="card-body">
+
+
+                        <div style="grid-template-columns: 1fr 1fr;" class="d-grid gap-2 text-start">
+                         
+                            <div class="border border-light rounded-1 d-flex align-items-center p-2">
+                              <div class="flex-shrink-0">
+                                <i class="bi bi-check-circle-fill text-success fs-3 me-0"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <small>Hasta 3 listas gratuitas</small>
+                              </div>
+                            </div>
+                          
+                            <div class="border border-light rounded-1 d-flex align-items-center p-2">
+                              <div class="flex-shrink-0">
+                                <i class="bi bi-check-circle-fill text-success fs-3 me-0"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <small>50 canales por lista</small>
+                              </div>
+                            </div>
+
+                            <div class="border border-light rounded-1 d-flex align-items-center p-2">
+                              <div class="flex-shrink-0">
+                                <i class="bi bi-check-circle-fill text-success fs-3 me-0"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <small>Exportación M3U</small>
+                              </div>
+                            </div>
+
+                            <div class="border border-light rounded-1 d-flex align-items-center p-2">
+                              <div class="flex-shrink-0">
+                                <i class="bi bi-check-circle-fill text-success fs-3 me-0"></i>
+                              </div>
+                              <div class="flex-grow-1 ms-3">
+                                <small>Verificación de canales</small>
+                              </div>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+                </div>
+              </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="p-5">
+                <div class="mb-3">
+                  <h3 class="h4 font-weight-bold text-theme"><i class="bi bi-person-plus me-2"></i>Crear cuenta</h3>
+                  <p class="text-muted mt-2">Regístrate gratis y comienza a gestionar tus listas M3U</p>
+                </div>
+                
+
+                <!-- Alertas -->
+                <div id="alertContainer" class="mb-3"></div>
+
+
+                <form id="registerForm" novalidate>
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <label for="fullName" class="form-label">
+                                        <i class="bi bi-person me-2"></i>Nombre Completo
+                                    </label>
+                                    <input type="text" 
+                                           class="form-control" 
+                                           id="fullName" 
+                                           required
+                                           pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$"
+                                           placeholder="Juan Pérez">
+                                    <div class="invalid-feedback">
+                                        Por favor ingresa un nombre válido (solo letras y espacios).
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="email" class="form-label">
+                                    <i class="bi bi-envelope me-2"></i>Correo Electrónico
+                                </label>
+                                <input type="email" 
+                                       class="form-control" 
+                                       id="email" 
+                                       required
+                                       placeholder="tu@email.com">
+                                <div class="invalid-feedback">
+                                    Por favor ingresa un correo electrónico válido.
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="password" class="form-label">
+                                    <i class="bi bi-lock me-2"></i>Contraseña
+                                </label>
+                                <input type="password" 
+                                       class="form-control" 
+                                       id="password" 
+                                       required
+                                       minlength="6"
+                                       placeholder="••••••••">
+                                <div class="invalid-feedback">
+                                    La contraseña debe tener al menos 6 caracteres.
+                                </div>
+                                <div class="form-text">
+                                    <small class="text-muted">
+                                        <i class="bi bi-info-circle me-1"></i>
+                                        Mínimo 6 caracteres. Recomendamos usar letras, números y símbolos.
+                                    </small>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="confirmPassword" class="form-label">
+                                    <i class="bi bi-lock-fill me-2"></i>Confirmar Contraseña
+                                </label>
+                                <input type="password" 
+                                       class="form-control" 
+                                       id="confirmPassword" 
+                                       required
+                                       minlength="6"
+                                       placeholder="••••••••">
+                                <div class="invalid-feedback">
+                                    Las contraseñas no coinciden.
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="terms" required>
+                                    <label class="form-check-label" for="terms">
+                                        Acepto los 
+                                        <a href="disclaimer.html" class="text-decoration-none">términos de servicio</a>
+                                        y
+                                        <a href="privacy-policy.html" class="text-decoration-none">política de privacidad</a>
+                                    </label>
+                                    <div class="invalid-feedback">
+                                        Debes aceptar los términos y condiciones.
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <span id="registerBtnText">Crear Cuenta</span>
+                                    <span id="registerSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                                </button>
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <div class="text-center">
+                                <p class="mb-0">¿Ya tienes una cuenta?</p>
+                                <a href="login.html" class="btn btn-outline-primary mt-2">
+                                    <i class="bi bi-box-arrow-in-right me-1"></i>Iniciar Sesión
+                                </a>
+                            </div>
+                        </form>
+                        
+                       
+                        
+                        
+
+
+
+
+              </div>
+            </div>
+          </div>  
+        </div>
+      </div><!-- end card-body -->
+    </div><!-- end col -->
+  </div><!-- row -->
+</main><!-- container -->
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="bg-theme text-white py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="mb-0">&copy; 2024 M3U Manager. Todos los derechos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Supabase -->
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <!-- Auth JS -->
+    <script src="js/auth.js"></script>
+    <!-- Register JS -->
+    <script src="js/register.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Playlist M3U</title>
+    <script>
+        // Configuración DE TU PROYECTO - REEMPLAZA ESTO
+        const SUPABASE_CONFIG = {
+            url: 'https://TU-PROYECTO.supabase.co',
+            key: 'TU-ANON-KEY'
+        };
+
+        async function generateM3U() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+            
+            if (!token) {
+                document.body.textContent = '# Error: Token no válido';
+                return;
+            }
+
+            try {
+                // Crear cliente Supabase
+                const { createClient } = supabase;
+                const supabaseClient = createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.key);
+                
+                // 1. Buscar lista por token
+                const { data: list, error: listError } = await supabaseClient
+                    .from('lists')
+                    .select('id, name')
+                    .eq('share_token', token)
+                    .eq('is_public', true)
+                    .single();
+
+                if (listError || !list) {
+                    document.body.textContent = '# Error: Lista no encontrada';
+                    return;
+                }
+
+                // 2. Obtener canales
+                const { data: channels, error: channelsError } = await supabaseClient
+                    .from('channels')
+                    .select(`
+                        name,
+                        tvg_name,
+                        logo_url,
+                        stream_url,
+                        categories(name)
+                    `)
+                    .eq('list_id', list.id)
+                    .eq('status', 'active') // Solo canales activos
+                    .order('name');
+
+                if (channelsError) throw channelsError;
+
+                // 3. Generar M3U
+                let m3uContent = '#EXTM3U\n';
+                
+                channels.forEach(channel => {
+                    // Encabezado EXTINF
+                    m3uContent += '#EXTINF:-1';
+                    
+                    // Metadatos
+                    if (channel.tvg_name) {
+                        m3uContent += ` tvg-id="${channel.tvg_name}"`;
+                    }
+                    
+                    m3uContent += ` tvg-name="${channel.name.replace(/"/g, '\\"')}"`;
+                    
+                    if (channel.logo_url) {
+                        m3uContent += ` tvg-logo="${channel.logo_url}"`;
+                    }
+                    
+                    if (channel.categories?.name) {
+                        m3uContent += ` group-title="${channel.categories.name.replace(/"/g, '\\"')}"`;
+                    }
+                    
+                    // Nombre del canal
+                    m3uContent += `,${channel.name}\n`;
+                    
+                    // URL del stream
+                    m3uContent += `${channel.stream_url}\n`;
+                });
+
+                // 4. Enviar como archivo M3U
+                // Configurar headers MIME
+                document.title = `playlist-${list.id}.m3u`;
+                
+                // Crear y forzar descarga
+                const blob = new Blob([m3uContent], { 
+                    type: 'audio/x-mpegurl; charset=utf-8' 
+                });
+                
+                const blobUrl = URL.createObjectURL(blob);
+                
+                // Crear enlace de descarga automática
+                const downloadLink = document.createElement('a');
+                downloadLink.href = blobUrl;
+                downloadLink.download = `iptv-${list.id}.m3u`;
+                downloadLink.style.display = 'none';
+                document.body.appendChild(downloadLink);
+                
+                // Descargar automáticamente
+                downloadLink.click();
+                
+                // Limpiar
+                setTimeout(() => {
+                    document.body.removeChild(downloadLink);
+                    URL.revokeObjectURL(blobUrl);
+                    
+                    // Mostrar contenido también
+                    document.body.textContent = m3uContent;
+                }, 100);
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.body.textContent = '# Error al generar la playlist';
+            }
+        }
+
+        // Iniciar cuando se cargue Supabase
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof supabase === 'undefined') {
+                // Cargar Supabase
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+                script.onload = generateM3U;
+                document.head.appendChild(script);
+            } else {
+                generateM3U();
+            }
+        });
+    </script>
+</head>
+<body>
+    <noscript>
+        <h1>Error: JavaScript requerido</h1>
+        <p>Esta playlist requiere JavaScript para funcionar.</p>
+    </noscript>
+    <div id="loading">
+        Generando playlist M3U...
+    </div>
+</body>
+</html>
