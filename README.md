@@ -5,7 +5,6 @@ Gestor basico de listas m3u.
   <li>Escanea listas ya creadas y las importa al listado, co verificacion de estado del canal (si la url esta activa).</li>
 </ul>
 Proyecto creado con ayuda de la IA (back) y por mi (front).</br>
-Con integracion de Supabase (para la base de datos).
 
 <h3>Tecnologías</h3>
 <ul>
