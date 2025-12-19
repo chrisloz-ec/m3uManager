@@ -7,7 +7,10 @@ Proyecto creado con ayuda de la IA (back) y por mi (front).
 Con integracion de Supabase (para la base de datos).
 
 <h3>Tecnologías</h3>
-- HTML
-- CSS, Bootstrap 5
-- JS
-- Supabase
+<ul>
+  <li>HTML</li>
+  <li>CSS, Bootstrap 5</li>
+  <li>JS</li>
+  <li>Supabase</li>
+</ul>
+
