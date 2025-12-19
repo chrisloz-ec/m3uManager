@@ -1,7 +1,7 @@
 class SharedListManager {
     constructor() {
-        this.supabaseUrl = 'https://twbhuuhbfqvwsiavtffy.supabase.co';
-        this.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3Ymh1dWhiZnF2d3NpYXZ0ZmZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4MDU5NzIsImV4cCI6MjA4MDM4MTk3Mn0.ElQX9v4GfG0P-RUVNbuXBokJgsmixkI7EuAOasRWB0w';
+        this.supabaseUrl = 'URL_SUPABASE';
+        this.supabaseKey = 'APIKEY_SUPABASE';
         this.client = null;
         this.shareToken = null;
         this.listData = null;
@@ -437,4 +437,5 @@ class SharedListManager {
 // Inicializar cuando se cargue la página
 document.addEventListener('DOMContentLoaded', () => {
     new SharedListManager();
+
 });
