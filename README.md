@@ -1,4 +1,4 @@
-<h2>m3uManager - Gestor de listas m3u8 (iptv)<h2>
+<h2>m3uManager - Gestor de listas m3u8 (iptv)</h2>
 Gestor basico de listas m3u.
 - Agregar listas, canales y su posterior exportacion en archivo .m3u.
 - Escanea listas ya creadas y las importa al listado, co verificacion de estado del canal (si la url esta activa).
@@ -6,7 +6,7 @@ Gestor basico de listas m3u.
 Proyecto creado con ayuda de la IA (back) y por mi (front).
 Con integracion de Supabase (para la base de datos).
 
-<h3>Tecnologías</h3>h3>
+<h3>Tecnologías</h3>
 - HTML
 - CSS, Bootstrap 5
 - JS
