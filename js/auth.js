@@ -3,8 +3,8 @@ console.log('=== AUTH.JS CARGADO ===');
 
 // Variables globales
 let supabaseClient = null;
-const SUPABASE_URL = 'https://twbhuuhbfqvwsiavtffy.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR3Ymh1dWhiZnF2d3NpYXZ0ZmZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ4MDU5NzIsImV4cCI6MjA4MDM4MTk3Mn0.ElQX9v4GfG0P-RUVNbuXBokJgsmixkI7EuAOasRWB0w';
+const SUPABASE_URL = 'URL_SUPABASE';
+const SUPABASE_KEY = 'APIKEY_SUPABASE';
 
 // Función global para alertas
 window.showAlert = function(message, type = 'info') {
@@ -408,4 +408,5 @@ async function resetPassword(email) {
             error: 'Error inesperado. Por favor intenta nuevamente.'
         };
     }
+
 }
